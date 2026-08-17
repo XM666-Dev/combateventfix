@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "package": "com.xm666.combateventfix.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "epicfight.AttackMixin$CritMixin$AirSlashAnimationMixin",
+    "epicfight.AttackMixin$CritMixin$AttackAnimationMixin",
+    "epicfight.AttackMixin$CritMixin$PlayerMixin",
+    "epicfight.AttackMixin$CritMixin$PlayerPatchMixin",
+    "epicfight.AttackMixin$PlayerPatchMixin",
+    "epicfight.AttackMixin$SweepMixin$PlayerMixin",
+    "epicfight.AttackMixin$SweepMixin$PlayerPatchMixin",
+    "epicfight.DamageMixin$NeoForgeEntityEventMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "client": [
+    "bettercombat.AttackMixin$MinecraftMixin"
+  ]
+}
