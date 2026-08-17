@@ -24,7 +24,7 @@ public class AttackMixin {
             original.call(info);
         }
 
-        @WrapOperation(method = "startAttack", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/client/event/InputEvent$InteractionKeyMappingTriggered;isCanceled()Z"))
+        @WrapOperation(method = "startAttack", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/client/event/InputEvent$InteractionKeyMappingTriggered;isCanceled()Z", remap = false))
         private boolean wrapCanceled(InputEvent.InteractionKeyMappingTriggered instance, Operation<Boolean> original) {
             var canceled = original.call(instance);
             if (canceled) return true;

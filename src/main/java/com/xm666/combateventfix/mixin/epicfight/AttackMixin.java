@@ -37,7 +37,7 @@ public class AttackMixin {
     private static class CritMixin {
         @Mixin(AttackAnimation.class)
         private static class AttackAnimationMixin {
-            @WrapOperation(method = "hurtCollidingEntities", at = @At(value = "INVOKE", target = "Lyesman/epicfight/world/capabilities/entitypatch/LivingEntityPatch;attack(Lyesman/epicfight/world/damagesource/EpicFightDamageSource;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/InteractionHand;)Lyesman/epicfight/api/utils/AttackResult;"))
+            @WrapOperation(method = "hurtCollidingEntities", at = @At(value = "INVOKE", target = "Lyesman/epicfight/world/capabilities/entitypatch/LivingEntityPatch;attack(Lyesman/epicfight/world/damagesource/EpicFightDamageSource;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/InteractionHand;)Lyesman/epicfight/api/utils/AttackResult;", remap = false), remap = false)
             private AttackResult wrapAttack(LivingEntityPatch<?> instance, EpicFightDamageSource damageSource, Entity target, InteractionHand hand, Operation<AttackResult> original) {
                 EpicAttackHandler.isEpicFightCritAttack = (Object) this instanceof AirSlashAnimation;
                 var result = original.call(instance, damageSource, target, hand);
@@ -55,14 +55,14 @@ public class AttackMixin {
 
         @Mixin(Player.class)
         private static class PlayerMixin {
-            @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeHooks;getCriticalHit(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;ZF)Lnet/minecraftforge/event/entity/player/CriticalHitEvent;"))
+            @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeHooks;getCriticalHit(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;ZF)Lnet/minecraftforge/event/entity/player/CriticalHitEvent;", remap = false))
             private static boolean modifyVanillaCritical(boolean original) {
                 if (!EpicAttackHandler.isEpicFightAttack) return original;
 
                 return EpicAttackHandler.isEpicFightCritAttack;
             }
 
-            @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeHooks;getCriticalHit(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;ZF)Lnet/minecraftforge/event/entity/player/CriticalHitEvent;"))
+            @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeHooks;getCriticalHit(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;ZF)Lnet/minecraftforge/event/entity/player/CriticalHitEvent;", remap = false))
             private static float modifyDamageModifier(float original) {
                 if (!EpicAttackHandler.isEpicFightAttack) return original;
 
@@ -72,12 +72,12 @@ public class AttackMixin {
 
         @Mixin(AirSlashAnimation.class)
         private static class AirSlashAnimationMixin {
-            @Redirect(method = "<init>(FLyesman/epicfight/api/animation/AnimationManager$AnimationAccessor;Lyesman/epicfight/api/asset/AssetAccessor;[Lyesman/epicfight/api/animation/types/AttackAnimation$Phase;)V", at = @At(value = "INVOKE", target = "Lyesman/epicfight/api/animation/types/AirSlashAnimation;addProperty(Lyesman/epicfight/api/animation/property/AnimationProperty$AttackPhaseProperty;Ljava/lang/Object;)Lyesman/epicfight/api/animation/types/AttackAnimation;"))
+            @Redirect(method = "<init>(FLyesman/epicfight/api/animation/AnimationManager$AnimationAccessor;Lyesman/epicfight/api/asset/AssetAccessor;[Lyesman/epicfight/api/animation/types/AttackAnimation$Phase;)V", at = @At(value = "INVOKE", target = "Lyesman/epicfight/api/animation/types/AirSlashAnimation;addProperty(Lyesman/epicfight/api/animation/property/AnimationProperty$AttackPhaseProperty;Ljava/lang/Object;)Lyesman/epicfight/api/animation/types/AttackAnimation;", remap = false), remap = false)
             private AttackAnimation redirectAccessorDamageModifier(AirSlashAnimation instance, AnimationProperty.AttackPhaseProperty<?> attackPhaseProperty, Object o) {
                 return null;
             }
 
-            @Redirect(method = "<init>(FLjava/lang/String;Lyesman/epicfight/api/asset/AssetAccessor;[Lyesman/epicfight/api/animation/types/AttackAnimation$Phase;)V", at = @At(value = "INVOKE", target = "Lyesman/epicfight/api/animation/types/AirSlashAnimation;addProperty(Lyesman/epicfight/api/animation/property/AnimationProperty$AttackPhaseProperty;Ljava/lang/Object;)Lyesman/epicfight/api/animation/types/AttackAnimation;"))
+            @Redirect(method = "<init>(FLjava/lang/String;Lyesman/epicfight/api/asset/AssetAccessor;[Lyesman/epicfight/api/animation/types/AttackAnimation$Phase;)V", at = @At(value = "INVOKE", target = "Lyesman/epicfight/api/animation/types/AirSlashAnimation;addProperty(Lyesman/epicfight/api/animation/property/AnimationProperty$AttackPhaseProperty;Ljava/lang/Object;)Lyesman/epicfight/api/animation/types/AttackAnimation;", remap = false), remap = false)
             private AttackAnimation redirectPathDamageModifier(AirSlashAnimation instance, AnimationProperty.AttackPhaseProperty<?> attackPhaseProperty, Object o) {
                 return null;
             }
@@ -99,7 +99,7 @@ public class AttackMixin {
 
         @Mixin(Player.class)
         private static class PlayerMixin {
-            @WrapOperation(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;canPerformAction(Lnet/minecraftforge/common/ToolAction;)Z"))
+            @WrapOperation(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;canPerformAction(Lnet/minecraftforge/common/ToolAction;)Z", remap = false))
             private boolean modifyVanillaSweep(ItemStack instance, ToolAction toolAction, Operation<Boolean> original) {
                 if (!EpicAttackHandler.isEpicFightAttack) return original.call(instance, toolAction);
 
