@@ -6,7 +6,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.xm666.combateventfix.handler.BetterAttackHandler;
 import net.minecraft.client.Minecraft;
-import net.neoforged.neoforge.client.event.InputEvent;
+import net.minecraftforge.client.event.InputEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -24,7 +24,7 @@ public class AttackMixin {
             original.call(info);
         }
 
-        @WrapOperation(method = "startAttack", at = @At(value = "INVOKE", target = "Lnet/neoforged/neoforge/client/event/InputEvent$InteractionKeyMappingTriggered;isCanceled()Z"))
+        @WrapOperation(method = "startAttack", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/client/event/InputEvent$InteractionKeyMappingTriggered;isCanceled()Z"))
         private boolean wrapCanceled(InputEvent.InteractionKeyMappingTriggered instance, Operation<Boolean> original) {
             var canceled = original.call(instance);
             if (canceled) return true;

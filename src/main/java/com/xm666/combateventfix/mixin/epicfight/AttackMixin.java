@@ -8,6 +8,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.ToolAction;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -53,14 +55,14 @@ public class AttackMixin {
 
         @Mixin(Player.class)
         private static class PlayerMixin {
-            @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/neoforged/neoforge/common/CommonHooks;fireCriticalHit(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;ZF)Lnet/neoforged/neoforge/event/entity/player/CriticalHitEvent;"))
+            @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeHooks;getCriticalHit(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;ZF)Lnet/minecraftforge/event/entity/player/CriticalHitEvent;"))
             private static boolean modifyVanillaCritical(boolean original) {
                 if (!EpicAttackHandler.isEpicFightAttack) return original;
 
                 return EpicAttackHandler.isEpicFightCritAttack;
             }
 
-            @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/neoforged/neoforge/common/CommonHooks;fireCriticalHit(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;ZF)Lnet/neoforged/neoforge/event/entity/player/CriticalHitEvent;"))
+            @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeHooks;getCriticalHit(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;ZF)Lnet/minecraftforge/event/entity/player/CriticalHitEvent;"))
             private static float modifyDamageModifier(float original) {
                 if (!EpicAttackHandler.isEpicFightAttack) return original;
 
@@ -90,16 +92,18 @@ public class AttackMixin {
     private static class SweepMixin {
         @Mixin(PlayerPatch.class)
         private static class PlayerPatchMixin {
-            @Redirect(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;setOnGround(Z)V"))
+            @Redirect(method = "attack", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;onGround:Z", opcode = Opcodes.PUTFIELD))
             private void redirectOnGround(Player instance, boolean b) {
             }
         }
 
         @Mixin(Player.class)
         private static class PlayerMixin {
-            @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/neoforged/neoforge/common/CommonHooks;fireSweepAttack(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;Z)Lnet/neoforged/neoforge/event/entity/player/SweepAttackEvent;"))
-            private boolean modifyVanillaSweep(boolean original) {
-                return original && !EpicAttackHandler.isEpicFightAttack;
+            @WrapOperation(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;canPerformAction(Lnet/minecraftforge/common/ToolAction;)Z"))
+            private boolean modifyVanillaSweep(ItemStack instance, ToolAction toolAction, Operation<Boolean> original) {
+                if (!EpicAttackHandler.isEpicFightAttack) return original.call(instance, toolAction);
+
+                return false;
             }
         }
     }
