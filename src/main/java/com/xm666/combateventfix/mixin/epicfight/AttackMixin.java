@@ -71,7 +71,12 @@ public class AttackMixin {
         @Mixin(AirSlashAnimation.class)
         private static class AirSlashAnimationMixin {
             @Redirect(method = "<init>(FLyesman/epicfight/api/animation/AnimationManager$AnimationAccessor;Lyesman/epicfight/api/asset/AssetAccessor;[Lyesman/epicfight/api/animation/types/AttackAnimation$Phase;)V", at = @At(value = "INVOKE", target = "Lyesman/epicfight/api/animation/types/AirSlashAnimation;addProperty(Lyesman/epicfight/api/animation/property/AnimationProperty$AttackPhaseProperty;Ljava/lang/Object;)Lyesman/epicfight/api/animation/types/AttackAnimation;"))
-            private AttackAnimation redirectDamageModifier(AirSlashAnimation instance, AnimationProperty.AttackPhaseProperty<?> attackPhaseProperty, Object o) {
+            private AttackAnimation redirectAccessorDamageModifier(AirSlashAnimation instance, AnimationProperty.AttackPhaseProperty<?> attackPhaseProperty, Object o) {
+                return null;
+            }
+
+            @Redirect(method = "<init>(FLjava/lang/String;Lyesman/epicfight/api/asset/AssetAccessor;[Lyesman/epicfight/api/animation/types/AttackAnimation$Phase;)V", at = @At(value = "INVOKE", target = "Lyesman/epicfight/api/animation/types/AirSlashAnimation;addProperty(Lyesman/epicfight/api/animation/property/AnimationProperty$AttackPhaseProperty;Ljava/lang/Object;)Lyesman/epicfight/api/animation/types/AttackAnimation;"))
+            private AttackAnimation redirectPathDamageModifier(AirSlashAnimation instance, AnimationProperty.AttackPhaseProperty<?> attackPhaseProperty, Object o) {
                 return null;
             }
 
