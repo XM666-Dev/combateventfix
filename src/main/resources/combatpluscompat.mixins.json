@@ -1,6 +1,7 @@
 {
   "required": true,
   "package": "com.xm666.combateventfix.mixin",
+  "plugin": "com.xm666.combateventfix.MixinConfigPlugin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "epicfight.AttackMixin$CritMixin$AirSlashAnimationMixin",
