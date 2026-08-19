@@ -1,17 +1,21 @@
 package com.xm666.combateventfix.handler;
 
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
+import com.xm666.combateventfix.CombatEventFix;
+import com.xm666.combateventfix.compat.EpicFightHandler;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
-import yesman.epicfight.api.event.impl.VanillaEntityEventHooks;
 
-@EventBusSubscriber
+@Mod(CombatEventFix.MODID)
 public class EpicAttackHandler {
     public static boolean isEpicFightAttack;
     public static boolean isEpicFightCritAttack;
 
-    @SubscribeEvent
+    public EpicAttackHandler(IEventBus eventBus) {
+        eventBus.addListener(EpicAttackHandler::onLivingIncomingDamage);
+    }
+
     public static void onLivingIncomingDamage(LivingIncomingDamageEvent event) {
-        VanillaEntityEventHooks.onCalculateDamagePre(event.getEntity(), event.getSource(), event.getAmount(), event::setAmount);
+        EpicFightHandler.handleDamege(event);
     }
 }
