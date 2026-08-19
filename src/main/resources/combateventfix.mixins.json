@@ -11,8 +11,7 @@
     "epicfight.AttackMixin$CritMixin$PlayerPatchMixin",
     "epicfight.AttackMixin$PlayerPatchMixin",
     "epicfight.AttackMixin$SweepMixin$PlayerMixin",
-    "epicfight.AttackMixin$SweepMixin$PlayerPatchMixin",
-    "epicfight.DamageMixin$NeoForgeEntityEventMixin"
+    "epicfight.AttackMixin$SweepMixin$PlayerPatchMixin"
   ],
   "injectors": {
     "defaultRequire": 1
