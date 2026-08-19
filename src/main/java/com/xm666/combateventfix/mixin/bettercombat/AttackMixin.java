@@ -30,7 +30,7 @@ public class AttackMixin {
             if (canceled) return true;
 
             try {
-                var method = Minecraft.class.getDeclaredMethod("handler$zeg000$bettercombat$pre_doAttack", CallbackInfoReturnable.class);
+                var method = BetterAttackHandler.getBetterCombatAttackMethod();
                 var cir = new CallbackInfoReturnable<Boolean>("", true);
                 method.setAccessible(true);
 
@@ -42,7 +42,7 @@ public class AttackMixin {
                     instance.setSwingHand(false);
                     return true;
                 }
-            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            } catch (InvocationTargetException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
 
