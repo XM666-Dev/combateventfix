@@ -2,6 +2,7 @@ package com.xm666.combateventfix.handler;
 
 import com.xm666.combateventfix.CombatEventFix;
 import com.xm666.combateventfix.compat.EpicFightHandler;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
@@ -12,6 +13,8 @@ public class EpicAttackHandler {
     public static boolean isEpicFightCritAttack;
 
     public EpicAttackHandler() {
+        if (!ModList.get().isLoaded("epicfight")) return;
+
         NeoForge.EVENT_BUS.addListener(EpicAttackHandler::onLivingIncomingDamage);
     }
 
