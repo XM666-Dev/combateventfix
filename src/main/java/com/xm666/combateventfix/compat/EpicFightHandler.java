@@ -4,7 +4,7 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import yesman.epicfight.api.event.impl.VanillaEntityEventHooks;
 
 public class EpicFightHandler {
-    public static void handleDamege(LivingIncomingDamageEvent event) {
+    public static void handleDamage(LivingIncomingDamageEvent event) {
         VanillaEntityEventHooks.onCalculateDamagePre(event.getEntity(), event.getSource(), event.getAmount(), event::setAmount);
     }
 }
