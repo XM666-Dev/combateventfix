@@ -12,7 +12,7 @@ public class BetterAttackHandler {
         if (betterCombatAttackMethod != null) return betterCombatAttackMethod;
 
         for (var method : Minecraft.class.getDeclaredMethods()) {
-            if (!method.getName().matches("^handler\\$[^$]+\\$bettercombat\\$pre_doAttack$")) continue;
+            if (!method.getName().matches("^handler\\$[^$]+\\$pre_doAttack$")) continue;
 
             betterCombatAttackMethod = method;
             return method;
