@@ -56,14 +56,14 @@ public class AttackMixin {
         @Mixin(Player.class)
         private static class PlayerMixin {
             @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeHooks;getCriticalHit(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;ZF)Lnet/minecraftforge/event/entity/player/CriticalHitEvent;", remap = false))
-            private static boolean modifyVanillaCritical(boolean original) {
+            private boolean modifyVanillaCritical(boolean original) {
                 if (!EpicAttackHandler.isEpicFightAttack) return original;
 
                 return EpicAttackHandler.isEpicFightCritAttack;
             }
 
             @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeHooks;getCriticalHit(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;ZF)Lnet/minecraftforge/event/entity/player/CriticalHitEvent;", remap = false))
-            private static float modifyDamageModifier(float original) {
+            private float modifyDamageModifier(float original) {
                 if (!EpicAttackHandler.isEpicFightAttack) return original;
 
                 return EpicAttackHandler.isEpicFightCritAttack ? 1.5F : 1.0F;
